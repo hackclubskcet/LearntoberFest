@@ -7,7 +7,6 @@ import EventsHero from "../components/EventsHero";
 import Hero from "../components/Hero";
 import Leaderboard from "../components/Leaderboard";
 import Navbar from "../components/Navbar";
-import ProfileComponent from "../components/Profile";
 import Stats from "../components/Stats";
 import styles from "../styles/Home.module.css";
 
