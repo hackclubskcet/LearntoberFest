@@ -22,7 +22,6 @@ const Hero = () => {
           border="solid 1px transparent"
         >
           <Box
-            mt={{ base: 10 }}
             mx="auto"
             maxW={{ base: "7xl" }}
             px={{ base: 4, sm: 6, lg: 8 }}
