@@ -9,6 +9,7 @@ import Stats from "../components/Stats";
 import { supabase } from "../utils/supabaseClient";
 import { useEffect, useState } from "react";
 import { ApolloClient, InMemoryCache, gql, HttpLink } from "@apollo/client";
+import Router from "next/router";
 
 export default function Home(props) {
   let [session, setSession] = useState(null);
@@ -36,6 +37,12 @@ export default function Home(props) {
       });
     }
   }, [dataFetched]);
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_IN') {
+      Router.push('/dashboard')
+    }
+  })
 
   return (
     <div>
