@@ -52,7 +52,7 @@ export default function Navbar() {
             >
               <Button variant="ghost">About Learntober</Button>
               <Button variant="ghost">Collaborators</Button>
-              <Button variant="ghost">Speakers</Button>
+              <Button variant="ghost">Workshops</Button>
               <Button variant="ghost">Leaderboard</Button>
             </HStack>
             <Button leftIcon={<IconGitHub />} color="#33d6a6" variant="solid">
