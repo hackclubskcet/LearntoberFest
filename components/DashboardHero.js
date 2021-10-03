@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import ReactTypingEffect from "react-typing-effect";
 import { Badge } from "@chakra-ui/react";
-const DashboardHero = () => {
+const DashboardHero = (props) => {
   return (
     <Box pos="relative" overflow="hidden">
       <Box maxW="7xl" mx="auto">
@@ -37,8 +37,8 @@ const DashboardHero = () => {
               {" "}
               <Avatar
                 size="2xl"
-                name="Segun Adebayo"
-                src="https://bit.ly/sage-adebayo"
+                name={props.name}
+                src={props.avatar}
               />{" "}
               <chakra.h1
                 fontSize={{ base: "2xl", sm: "5xl", md: "6xl" }}
@@ -48,7 +48,7 @@ const DashboardHero = () => {
                 color={useColorModeValue("gray.900", "white")}
               >
                 <chakra.span display={{ base: "block", xl: "inline" }}>
-                  Hello Bhuvi!
+                  Hello {props.name}!
                 </chakra.span>
               </chakra.h1>
               <chakra.h1
@@ -59,7 +59,7 @@ const DashboardHero = () => {
                 color={useColorModeValue("gray.900", "white")}
               ></chakra.h1>
               <Badge color="#33d6a6" variant="subtle">
-                Sri Krishna College of Engineering and Technology
+                {props.university}
               </Badge>{" "}
               <chakra.p
                 mt={{ base: 10, sm: 5, md: 5 }}
