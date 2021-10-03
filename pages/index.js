@@ -45,7 +45,7 @@ export default function Home({ stats }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const GITHUB_BASE_URL = "https://api.github.com/graphql";
 
   const httpLink = new HttpLink({
