@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import ReactTypingEffect from "react-typing-effect";
 import { Badge } from "@chakra-ui/react";
-const ProfileComponent = () => {
+const SubmitProject = () => {
   return (
     <Box pos="relative" overflow="hidden">
       <Box maxW="7xl" mx="auto">
@@ -46,7 +46,7 @@ const ProfileComponent = () => {
                 mt={{ base: "10" }}
               >
                 <chakra.span display={{ base: "block", xl: "inline" }}>
-                  Profile{" "}
+                  Submit Project{" "}
                 </chakra.span>
               </chakra.h1>
               <chakra.h1
@@ -56,7 +56,20 @@ const ProfileComponent = () => {
                 fontWeight="extrabold"
                 color={useColorModeValue("gray.900", "white")}
               ></chakra.h1>
-
+              <chakra.p
+                mt={{ base: 10, sm: 5, md: 5 }}
+                mx={{ sm: "auto", lg: 0 }}
+                mb={6}
+                fontSize={{ base: "md", md: "xl" }}
+                color="gray.500"
+                lineHeight="base"
+              >
+                Before submitting a project, make sure you have made a Pull
+                Request on our GitHub repository. If you don't understand a Pull
+                request is - click here.
+                <br />
+                <br />
+              </chakra.p>
               <Stack
                 direction={{ base: "column", sm: "column", md: "column" }}
                 mb={{ base: 4, md: 8 }}
@@ -64,31 +77,14 @@ const ProfileComponent = () => {
                 spacing={{ base: 7, md: 2 }}
                 justifyContent="center"
               >
+                <br />
+                <br />
                 <FormControl id="first-name" isRequired>
-                  <FormLabel>Full name</FormLabel>
+                  <FormLabel>Link to your pull request on GitHub</FormLabel>
                   <Input placeholder="This will be used for certificates" />
                 </FormControl>
                 <br />
                 <br />
-                <FormControl id="email" isRequired>
-                  <FormLabel>University email address</FormLabel>
-                  <Input
-                    placeholder="Univeristy email preferred"
-                    type="email"
-                  />
-                </FormControl>
-                <br />
-                <br />
-                <FormControl id="country" isRequired>
-                  <FormLabel>University</FormLabel>
-                  <Select placeholder="Select your univeristy or select 'other' if you don't find it">
-                    <option>
-                      Sri Krishna College of Engineering and Technology
-                    </option>
-                    <option>Chandigarh Group of Colleges</option>
-                    <option>Other</option>
-                  </Select>
-                </FormControl>
                 <br />
                 <br />
                 <br />
@@ -99,7 +95,7 @@ const ProfileComponent = () => {
                   size="lg"
                   variant="solid"
                 >
-                  Save and proceed
+                  Save and submit
                 </Button>
               </Stack>
             </Box>
@@ -110,4 +106,4 @@ const ProfileComponent = () => {
   );
 };
 
-export default ProfileComponent;
+export default SubmitProject;
