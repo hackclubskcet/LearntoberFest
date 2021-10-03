@@ -42,7 +42,7 @@ export default function BasicStatistics(props) {
         py={10}
         fontWeight={"bold"}
       >
-        Statistics
+        Live Stats
       </chakra.h1>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard title={"Pull requests"} stat={pullRequests} />

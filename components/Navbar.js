@@ -43,7 +43,7 @@ const pathVariants = {
   animate: {
     strokeDashoffset: 0,
     transition: {
-      duration: 1,
+      duration: 3,
     },
   },
 
