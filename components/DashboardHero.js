@@ -126,6 +126,32 @@ const DashboardHero = () => {
                   Project Gallery
                 </Button>
               </Stack>
+              <Stack
+                direction={{ base: "column", sm: "column", md: "row" }}
+                mb={{ base: 4, md: 8 }}
+                mt={{ base: 10, md: 8 }}
+                spacing={{ base: 7, md: 2 }}
+                justifyContent="center"
+              >
+                <Button
+                  backgroundColor="#33d6a6"
+                  color="gray.800"
+                  variant="solid"
+                  size="lg"
+                  isDisabled="true"
+                >
+                  Digital Certificate (Project not submitted/verified)
+                </Button>
+                <Button
+                  backgroundColor="#33d6a6"
+                  color="gray.800"
+                  variant="solid"
+                  size="lg"
+                  isDisabled="true"
+                >
+                  Claim swags and rewards
+                </Button>
+              </Stack>
             </Box>
           </Box>
         </Box>
