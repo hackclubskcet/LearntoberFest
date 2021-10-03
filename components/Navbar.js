@@ -339,22 +339,20 @@ export default function Navbar(props) {
             </HStack>
 
             {props.loggedIn ? (
-              <Link href="/logout">
-                <Button
-                  leftIcon={<IconLogOut />}
-                  color="red"
-                  variant="solid"
-                  onClick={props.handleLogin}
-                >
-                  Logout
-                </Button>
-              </Link>
+              <Button
+                leftIcon={<IconLogOut />}
+                color="red"
+                variant="solid"
+                onClick={props.handleLogout}
+              >
+                Logout
+              </Button>
             ) : (
               <Button
                 leftIcon={<IconGitHub />}
                 color="#33d6a6"
                 variant="solid"
-                onClick={props.handleLogout}
+                onClick={props.handleLogin}
               >
                 Login with GitHub
               </Button>
