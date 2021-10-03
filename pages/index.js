@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import About from "../components/About";
 import Collaborators from "../components/Collaborators";
+import FAQ from "../components/FAQ";
 import Hero from "../components/Hero";
 import Leaderboard from "../components/Leaderboard";
 import Navbar from "../components/Navbar";
@@ -22,6 +23,7 @@ export default function Home() {
       <Stats />
       <Collaborators />
       <Leaderboard />
+      <FAQ />
     </div>
   );
 }
