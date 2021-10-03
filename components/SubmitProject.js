@@ -3,19 +3,13 @@ import {
   chakra,
   Box,
   useColorModeValue,
-  Icon,
-  Image,
-  HStack,
   Button,
   Stack,
   FormControl,
   Input,
   FormLabel,
-  Select,
-  FormHelperText,
 } from "@chakra-ui/react";
-import ReactTypingEffect from "react-typing-effect";
-import { Badge } from "@chakra-ui/react";
+
 const SubmitProject = () => {
   return (
     <Box pos="relative" overflow="hidden">

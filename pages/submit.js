@@ -1,18 +1,52 @@
 import Head from "next/head";
-import Image from "next/image";
-import About from "../components/About";
-import Collaborators from "../components/Collaborators";
-import EventsCard from "../components/EventsCard";
-import EventsHero from "../components/EventsHero";
-import Hero from "../components/Hero";
-import Leaderboard from "../components/Leaderboard";
 import Navbar from "../components/Navbar";
-import ProfileComponent from "../components/Profile";
-import Stats from "../components/Stats";
 import SubmitProject from "../components/SubmitProject";
-import styles from "../styles/Home.module.css";
+import Router from "next/router";
+import { supabase } from "../utils/supabaseClient";
+import { useLayoutEffect, useState } from "react";
 
-export default function Profile() {
+export default function Submit(props) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(props.loggedIn);
+  const [user, setUser] = useState(null);
+
+  useLayoutEffect(() => {
+    if (loggedIn === false) {
+      Router.push("/login");
+    }
+
+    async function fetchData() {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("name, email, university, project_url, is_project_verified")
+        .eq("id", supabase.auth.user().id)
+        .limit(1);
+
+      if (data.length === 0) {
+        await Router.push("/profile");
+      }
+
+      if (error) {
+        throw error;
+      } else {
+        setUser(data[0]);
+        setIsLoading(false);
+      }
+    }
+
+    if (loggedIn === true && user === null) {
+      fetchData();
+    }
+  }, [loggedIn, user]);
+
+  function getUserData(key) {
+    if (user !== undefined && user !== null) {
+      return user[key];
+    }
+
+    return "";
+  }
+
   return (
     <div>
       <Head>
@@ -20,8 +54,15 @@ export default function Profile() {
         <meta name="description" content="An event promoting open source" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
-      <SubmitProject />
+      <Navbar
+        loggedIn={props.loggedIn}
+        handleLogin={props.handleLogin}
+        handleLogout={props.handleLogout}
+      />
+      <SubmitProject
+        project_url={getUserData("project_url")}
+        is_verified={getUserData("is_project_verified")}
+      />
     </div>
   );
 }

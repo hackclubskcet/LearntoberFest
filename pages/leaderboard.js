@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import Stats from "../components/Stats";
 import styles from "../styles/Home.module.css";
 
-export default function Leaderboard() {
+export default function Leaderboard(props) {
   return (
     <div>
       <Head>
@@ -12,7 +12,11 @@ export default function Leaderboard() {
         <meta name="description" content="An event promoting open source" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
+      <Navbar
+        loggedIn={props.loggedIn}
+        handleLogin={props.handleLogin}
+        handleLogout={props.handleLogout}
+      />
       <LeaderboardComponent />
     </div>
   );

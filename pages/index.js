@@ -10,18 +10,32 @@ import { supabase } from "../utils/supabaseClient";
 import { useEffect, useState } from "react";
 import { ApolloClient, InMemoryCache, gql, HttpLink } from "@apollo/client";
 
-export default function Home({ stats }) {
+export default function Home(props) {
   let [session, setSession] = useState(null);
+  const [dataFetched, setDataFetched] = useState(false);
+  const [members, setMembers] = useState(null);
+
+  const stats = props.stats;
 
   useEffect(() => {
     setSession(supabase.auth.session());
     supabase.auth.onAuthStateChange((_event, session) => setSession(session));
-  }, []);
+    async function fetchData() {
+      const { data, error } = await supabase.from("profiles").select();
 
-  async function handleLogin() {
-    let { error } = await supabase.auth.signIn({ provider: "github" });
-    if (error) console.log("Error: ", error.message);
-  }
+      if (error) {
+        throw error;
+      } else {
+        setMembers(data);
+      }
+    }
+
+    if (!dataFetched) {
+      fetchData().then(() => {
+        setDataFetched(true);
+      });
+    }
+  }, [dataFetched]);
 
   return (
     <div>
@@ -30,8 +44,12 @@ export default function Home({ stats }) {
         <meta name="description" content="An event promoting open source" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar handleLogin={handleLogin} />
-      <Hero handleLogin={handleLogin} />
+      <Navbar
+        loggedIn={props.loggedIn}
+        handleLogin={props.handleLogin}
+        handleLogout={props.handleLogout}
+      />
+      <Hero handleLogin={props.handleLogin} />
       <About />
       <Stats
         pullRequests={stats.pullRequests}

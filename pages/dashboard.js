@@ -61,7 +61,11 @@ export default function Dashboard(props) {
         </Box>
       ) : (
         <>
-          <Navbar loggedIn={loggedIn} />
+          <Navbar
+            loggedIn={props.loggedIn}
+            handleLogin={props.handleLogin}
+            handleLogout={props.handleLogout}
+          />
           <DashboardHero
             name={getUserData("name")}
             avatar={supabase.auth.user().user_metadata.avatar_url}
