@@ -10,13 +10,15 @@ import {
   Button,
   useDisclosure,
   VStack,
-  IconButton,
   CloseButton,
 } from "@chakra-ui/react";
-import { Button as SupaButton, IconGitHub, IconMail } from "@supabase/ui";
-import { Typography } from "@supabase/ui";
+import {
+  IconGitHub,
+  IconLogOut,
+} from "@supabase/ui";
+import Link from "next/link";
 
-export default function Navbar() {
+export default function Navbar(props) {
   const bg = useColorModeValue("white", "gray.800");
   const mobileNav = useDisclosure();
 
@@ -55,9 +57,28 @@ export default function Navbar() {
               <Button variant="ghost">Workshops</Button>
               <Button variant="ghost">Leaderboard</Button>
             </HStack>
-            <Button leftIcon={<IconGitHub />} color="#33d6a6" variant="solid">
-              Login with GitHub
-            </Button>
+
+            {props.loggedIn ? (
+              <Link href="/logout">
+                <Button
+                  leftIcon={<IconLogOut />}
+                  color="red"
+                  variant="solid"
+                  onClick={props.handleLogin}
+                >
+                  Logout
+                </Button>
+              </Link>
+            ) : (
+              <Button
+                leftIcon={<IconGitHub />}
+                color="#33d6a6"
+                variant="solid"
+                onClick={props.handleLogout}
+              >
+                Login with GitHub
+              </Button>
+            )}
             <Box display={{ base: "inline-flex", md: "none" }}>
               <VStack
                 pos="absolute"

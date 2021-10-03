@@ -3,15 +3,12 @@ import {
   chakra,
   Box,
   useColorModeValue,
-  Icon,
-  Image,
-  HStack,
   Button,
   Stack,
 } from "@chakra-ui/react";
 import ReactTypingEffect from "react-typing-effect";
 import { Badge } from "@chakra-ui/react";
-const Hero = () => {
+const Hero = (props) => {
   return (
     <Box pos="relative" overflow="hidden">
       <Box maxW="7xl" mx="auto">
@@ -116,6 +113,7 @@ const Hero = () => {
                   color="gray.800"
                   size="lg"
                   variant="solid"
+                  onClick={props.handleLogin}
                 >
                   Submit a project
                 </Button>
