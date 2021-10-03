@@ -12,7 +12,7 @@ export default function Submit(props) {
 
   useLayoutEffect(() => {
     if (loggedIn === false) {
-      Router.push("/login");
+      Router.push("/");
     }
 
     async function fetchData() {
