@@ -32,7 +32,8 @@ function StatsCard(props) {
   );
 }
 
-export default function BasicStatistics() {
+export default function BasicStatistics(props) {
+  const { pullRequests, stars, commits } = props;
   return (
     <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
       <chakra.h1
@@ -44,9 +45,9 @@ export default function BasicStatistics() {
         Statistics
       </chakra.h1>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-        <StatsCard title={"Pull requests"} stat={"50"} />
-        <StatsCard title={"Commits"} stat={"300"} />
-        <StatsCard title={"Participants registered"} stat={"100"} />
+        <StatsCard title={"Pull requests"} stat={pullRequests} />
+        <StatsCard title={"Commits"} stat={commits} />
+        <StatsCard title={"Participants registered"} stat={stars} />
       </SimpleGrid>
     </Box>
   );
