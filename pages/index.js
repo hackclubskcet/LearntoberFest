@@ -10,11 +10,13 @@ import { supabase } from "../utils/supabaseClient";
 import { useEffect, useState } from "react";
 import { ApolloClient, InMemoryCache, gql, HttpLink } from "@apollo/client";
 import Router from "next/router";
+import { Box, Image } from "@chakra-ui/react";
 
 export default function Home(props) {
   let [session, setSession] = useState(null);
   const [dataFetched, setDataFetched] = useState(false);
-  const [members, setMembers] = useState(null);
+  const [members, setMembers] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const stats = props.stats;
 
@@ -22,12 +24,15 @@ export default function Home(props) {
     setSession(supabase.auth.session());
     supabase.auth.onAuthStateChange((_event, session) => setSession(session));
     async function fetchData() {
-      const { data, error } = await supabase.from("profiles").select();
+      const { data, error, count } = await supabase
+        .from("profiles")
+        .select("id", { count: "exact", head: true });
 
       if (error) {
         throw error;
       } else {
-        setMembers(data);
+        setMembers(count);
+        setIsLoading(false);
       }
     }
 
@@ -39,10 +44,10 @@ export default function Home(props) {
   }, [dataFetched]);
 
   supabase.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_IN') {
-      Router.push('/dashboard')
+    if (event === "SIGNED_IN") {
+      Router.push("/dashboard");
     }
-  })
+  });
 
   return (
     <div>
@@ -51,21 +56,30 @@ export default function Home(props) {
         <meta name="description" content="An event promoting open source" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar
-        loggedIn={props.loggedIn}
-        handleLogin={props.handleLogin}
-        handleLogout={props.handleLogout}
-      />
-      <Hero handleLogin={props.handleLogin} />
-      <About />
-      <Stats
-        pullRequests={stats.pullRequests}
-        stars={stats.stars}
-        commits={stats.commits}
-      />
-      <Collaborators />
-      <Leaderboard />
-      <FAQ />
+      {isLoading ? (
+        <Box w="100%">
+          <Image src="/LFload.gif" alt={"Loading...."} />
+        </Box>
+      ) : (
+        <>
+          <Navbar
+            loggedIn={props.loggedIn}
+            handleLogin={props.handleLogin}
+            handleLogout={props.handleLogout}
+          />
+          <Hero handleLogin={props.handleLogin} />
+          <About />
+          <Stats
+            pullRequests={stats.pullRequests}
+            stars={stats.stars}
+            commits={stats.commits}
+            members={members}
+          />
+          <Collaborators />
+          <Leaderboard />
+          <FAQ />
+        </>
+      )}
     </div>
   );
 }
