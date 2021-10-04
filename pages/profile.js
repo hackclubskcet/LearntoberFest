@@ -57,6 +57,7 @@ export default function Profile(props) {
         name={getUserData("name")}
         email={getUserData("email")}
         university={getUserData("university")}
+        loggedIn={loggedIn}
       />
     </div>
   );

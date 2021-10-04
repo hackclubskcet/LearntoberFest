@@ -106,7 +106,7 @@ const ProfileComponent = (props) => {
   async function handleProfileUpdation(e) {
     e.preventDefault();
 
-    if (!loggedIn) {
+    if (loggedIn) {
       try {
         setLoading(true);
 
