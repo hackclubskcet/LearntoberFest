@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   chakra,
   Box,
@@ -8,9 +8,112 @@ import {
   FormControl,
   Input,
   FormLabel,
+  InputGroup,
+  FormErrorMessage,
 } from "@chakra-ui/react";
+import { supabase } from "../utils/supabaseClient";
+import Router from "next/router";
 
-const SubmitProject = () => {
+const SubmitProject = (props) => {
+  const urlRef = useRef();
+
+  let [urlError, setUrlErrorState] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(props.loggedIn);
+  const [urlUpdationFailure, setUrlUpdationFailure] = useState(false);
+
+  let function_map = {
+    url: setUrlErrorState,
+  };
+
+  let hasError = false;
+
+  function urlUpdationFailed() {
+    setUrlUpdationFailure(true);
+    setLoading(false);
+  }
+
+  function setError(key, value) {
+    hasError = true;
+    function_map[key](value);
+  }
+
+  function resetErrors() {
+    hasError = false;
+    setUrlErrorState(false);
+  }
+
+  function hasAnyError() {
+    return hasError;
+  }
+
+  function validate() {
+    //Resetting previous errors
+    resetErrors();
+
+    //Name validation
+    var url = urlRef.current;
+
+    if (url.value === "") {
+      setError("url", "Please enter your project url");
+    }
+
+    return;
+  }
+
+  async function handleUrlUpdation(e) {
+    e.preventDefault();
+
+    if (loggedIn) {
+      try {
+        setLoading(true);
+
+        validate();
+
+        var hasError = hasAnyError();
+
+        if (hasError) {
+          setLoading(false);
+          return;
+        } else {
+          var user = supabase.auth.user();
+          await updateUrl(user);
+
+          await Router.push("/dashboard");
+        }
+      } catch (error) {
+        urlUpdationFailed();
+        alert(error.message);
+      }
+    }
+  }
+
+  async function updateUrl(user) {
+    if (!urlUpdationFailure) {
+      try {
+        const updates = {
+          project_url: urlRef.current.value,
+        };
+
+        let { error } = await supabase
+          .from("profiles")
+          .update(updates, {
+            returning: "minimal",
+          })
+          .match({ id: user.id });
+
+        if (error) {
+          urlUpdationFailed();
+          throw error;
+        }
+      } catch (error) {
+        urlUpdationFailed();
+        alert(error.message);
+      }
+    }
+  }
+
   return (
     <Box pos="relative" overflow="hidden">
       <Box maxW="7xl" mx="auto">
@@ -71,16 +174,31 @@ const SubmitProject = () => {
                 spacing={{ base: 7, md: 2 }}
                 justifyContent="center"
               >
-                <br />
-                <br />
-                <FormControl id="first-name" isRequired>
-                  <FormLabel>Link to your pull request on GitHub</FormLabel>
-                  <Input placeholder="This will be used for certificates" />
+                {props.is_verified ? (
+                  <span style={{ color: "red" }}>
+                    Project url cannot be changed once the project has been
+                    verified!
+                  </span>
+                ) : (
+                  ""
+                )}
+                <FormControl id="url" isInvalid={urlError} isRequired>
+                  <FormLabel>
+                    Link to your pull request on GitHub (Your project will be
+                    manually verified)
+                  </FormLabel>
+                  <InputGroup>
+                    <Input
+                      placeholder="This will be used for certificates"
+                      type="text"
+                      ref={urlRef}
+                      required={true}
+                      defaultValue={props.project_url}
+                      isDisabled={props.is_verified}
+                    />
+                  </InputGroup>
+                  <FormErrorMessage>{urlError}</FormErrorMessage>
                 </FormControl>
-                <br />
-                <br />
-                <br />
-                <br />
                 <br />
                 <br />
                 <Button
@@ -88,8 +206,10 @@ const SubmitProject = () => {
                   color="gray.800"
                   size="lg"
                   variant="solid"
+                  onClick={handleUrlUpdation}
+                  isDisabled={props.is_verified}
                 >
-                  Save and submit
+                  {loading ? "Updating..." : "Save and submit"}
                 </Button>
               </Stack>
             </Box>

@@ -62,6 +62,7 @@ export default function Submit(props) {
       <SubmitProject
         project_url={getUserData("project_url")}
         is_verified={getUserData("is_project_verified")}
+        loggedIn={loggedIn}
       />
     </div>
   );
