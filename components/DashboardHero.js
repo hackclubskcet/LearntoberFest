@@ -3,15 +3,13 @@ import {
   chakra,
   Box,
   useColorModeValue,
-  Icon,
-  Image,
-  HStack,
   Button,
   Stack,
   Avatar,
 } from "@chakra-ui/react";
-import ReactTypingEffect from "react-typing-effect";
+import Link from "next/link";
 import { Badge } from "@chakra-ui/react";
+
 const DashboardHero = (props) => {
   return (
     <Box pos="relative" overflow="hidden">
@@ -35,11 +33,7 @@ const DashboardHero = (props) => {
               mx="auto"
             >
               {" "}
-              <Avatar
-                size="2xl"
-                name={props.name}
-                src={props.avatar}
-              />{" "}
+              <Avatar size="2xl" name={props.name} src={props.avatar} />{" "}
               <chakra.h1
                 fontSize={{ base: "2xl", sm: "5xl", md: "6xl" }}
                 letterSpacing="tight"
@@ -109,14 +103,16 @@ const DashboardHero = (props) => {
                 >
                   How to submit
                 </Button>
-                <Button
-                  backgroundColor="#33d6a6"
-                  color="gray.800"
-                  size="lg"
-                  variant="solid"
-                >
-                  Submit a project
-                </Button>
+                <Link href={"/submit"}>
+                  <Button
+                    backgroundColor="#33d6a6"
+                    color="gray.800"
+                    size="lg"
+                    variant="solid"
+                  >
+                    Submit a project
+                  </Button>
+                </Link>
                 <Button
                   backgroundColor="#33d6a6"
                   color="gray.800"

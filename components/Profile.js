@@ -121,7 +121,7 @@ const ProfileComponent = (props) => {
           var user = supabase.auth.user();
           await updateProfile(user);
 
-          Router.push("/dashboard");
+          await Router.push("/dashboard");
         }
       } catch (error) {
         profileUpdationFailed();

@@ -19,7 +19,7 @@ export default function Dashboard(props) {
     async function fetchData() {
       const { data, error } = await supabase
         .from("profiles")
-        .select("name, email, university")
+        .select("name, email, university, is_project_verified")
         .eq("id", supabase.auth.user().id)
         .limit(1);
 
@@ -70,6 +70,7 @@ export default function Dashboard(props) {
             name={getUserData("name")}
             avatar={supabase.auth.user().user_metadata.avatar_url}
             university={getUserData("university")}
+            is_project_verified={getUserData("is_project_verified")}
           />
         </>
       )}
